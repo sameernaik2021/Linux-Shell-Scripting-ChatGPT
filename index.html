@@ -1,0 +1,489 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Linux Shell Scripting — 90 Question Self-Test</title>
+<style>
+:root{
+  --bg:#09111f;--card:#111d31;--card2:#172640;--text:#eef5ff;--muted:#b5c3d9;
+  --accent:#55c7ee;--good:#39d98a;--bad:#ff7272;--warn:#ffd166;--line:#2a3b59
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  margin:0;background:linear-gradient(135deg,#070d18,#10203a);color:var(--text);
+  font-family:system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;line-height:1.55
+}
+button,input{font:inherit}
+button{cursor:pointer}
+.container{width:min(1050px,94%);margin:auto;padding:22px 0 45px}
+header,.panel{
+  background:var(--card);border:1px solid var(--line);border-radius:18px;
+  box-shadow:0 14px 35px rgba(0,0,0,.28)
+}
+header{padding:24px;margin-bottom:18px}
+h1{margin:0 0 6px;font-size:clamp(1.5rem,4vw,2.25rem)}
+h2{margin-top:0}
+.subtitle,.muted{color:var(--muted)}
+.meta{display:flex;flex-wrap:wrap;gap:8px;margin-top:15px}
+.pill{border:1px solid var(--line);border-radius:999px;padding:5px 10px;color:var(--muted)}
+.progress{height:11px;background:#22304a;border-radius:99px;overflow:hidden;margin-top:16px}
+.progress-bar{height:100%;width:0;background:var(--accent);transition:width .2s}
+.panel{padding:24px}
+.question-level{font-weight:800;color:var(--accent);font-size:.82rem;text-transform:uppercase;letter-spacing:.06em}
+.question{font-size:1.2rem;font-weight:750;margin:9px 0 19px}
+.question code{background:#07101d;padding:2px 5px;border-radius:5px}
+.options{display:grid;gap:10px}
+.option{
+  display:flex;align-items:flex-start;gap:11px;padding:13px;border:1px solid var(--line);
+  border-radius:11px;background:var(--card2);cursor:pointer
+}
+.option:hover{border-color:var(--accent)}
+.option input{margin-top:5px;accent-color:var(--accent)}
+.option:focus-within{outline:3px solid var(--warn);outline-offset:2px}
+.actions{display:flex;flex-wrap:wrap;gap:9px;margin-top:20px}
+button{
+  border:0;border-radius:10px;padding:11px 16px;background:var(--accent);color:#06101a;
+  font-weight:800
+}
+button.secondary{background:#293a57;color:var(--text)}
+button.danger{background:#7b303a;color:#fff}
+button:focus-visible{outline:3px solid var(--warn);outline-offset:2px}
+.feedback{
+  margin-top:17px;padding:14px;border-radius:11px;background:#0b1627;border-left:5px solid var(--accent)
+}
+.feedback.good{border-left-color:var(--good)}
+.feedback.bad{border-left-color:var(--bad)}
+.feedback.hint{border-left-color:var(--warn)}
+.hidden{display:none!important}
+.result{margin-bottom:18px}
+.big-score{font-size:2.7rem;font-weight:900}
+.grade{font-size:1.35rem;font-weight:850}
+table{width:100%;border-collapse:collapse}
+th,td{padding:9px;text-align:left;border-bottom:1px solid var(--line)}
+.review-item{padding:15px 0;border-bottom:1px solid var(--line)}
+.review-item:last-child{border-bottom:0}
+.good-text{color:var(--good)}
+.bad-text{color:var(--bad)}
+.small{font-size:.91rem}
+code{font-family:ui-monospace,SFMono-Regular,Consolas,monospace}
+@media(max-width:650px){
+  .container{width:96%;padding-top:10px}
+  header,.panel{padding:17px}
+  .actions button{flex:1}
+}
+@media(prefers-reduced-motion:reduce){
+  *{scroll-behavior:auto!important;transition:none!important}
+}
+@media print{
+  body{background:white;color:black}
+  header,.panel{box-shadow:none;border:1px solid #999}
+  .actions{display:none}
+}
+</style>
+</head>
+<body>
+<main class="container">
+<header>
+  <h1>Linux Shell Scripting — 90 Question Self-Test</h1>
+  <div class="subtitle">30 Basic • 30 Medium / Intermediate • 30 Advanced</div>
+  <div class="meta">
+    <span class="pill" id="progressLabel">Question 1 of 90</span>
+    <span class="pill" id="attemptLabel">Attempt 1</span>
+    <span class="pill">1 point per question</span>
+  </div>
+  <div class="progress" role="progressbar" aria-label="Quiz progress"
+       aria-valuemin="0" aria-valuemax="90" aria-valuenow="0">
+    <div class="progress-bar" id="progressBar"></div>
+  </div>
+</header>
+
+<section id="quizPanel" class="panel" aria-live="polite"></section>
+<section id="results" class="hidden"></section>
+</main>
+
+<script>
+"use strict";
+
+const QUESTIONS = [
+/* ===================== BASIC 1–30 ===================== */
+{level:"Basic",topic:"Shell Basics",type:"mcq",q:"Which component interprets commands such as <code>ls -l</code> in a Bash session?",a:["Bash shell","Linux kernel directly","CPU microcode","Filesystem"],c:[0],h:"Think about the program that reads your command and launches programs.",e:"Bash is a shell. It interprets command lines, performs expansions and invokes programs."},
+{level:"Basic",topic:"Shell Basics",type:"tf",q:"Bash stands for “Bourne Again Shell.”",a:["True","False"],c:[0],h:"The name is a play on the earlier Bourne shell.",e:"True. Bash is the Bourne Again Shell."},
+{level:"Basic",topic:"Shebang",type:"mcq",q:"What is the purpose of <code>#!/bin/bash</code> at the start of an executable script?",a:["It selects Bash as the interpreter","It grants root privileges","It enables tracing automatically","It comments out the script"],c:[0],h:"This line is called a shebang.",e:"The shebang identifies the interpreter to use when the script is executed directly."},
+{level:"Basic",topic:"Shell Basics",type:"mcq",q:"Which character starts a normal Bash comment?",a:["#","//","--","/*"],c:[0],h:"Shell comments use a single special character.",e:"A Bash comment normally begins with <code>#</code>."},
+{level:"Basic",topic:"Exit Status",type:"mcq",q:"Immediately after a command completes, what does <code>$?</code> normally contain?",a:["The previous command's exit status","The current shell PID","The number of arguments","The current directory"],c:[0],h:"It is frequently used for success/failure checks.",e:"<code>$?</code> expands to the exit status of the most recently executed foreground command/pipeline context."},
+{level:"Basic",topic:"Variables",type:"mcq",q:"Which is a valid Bash variable assignment?",a:["name=Raj","name = Raj","$name=Raj","var:name=Raj"],c:[0],h:"Do not put spaces around <code>=</code>.",e:"Bash assignments use <code>name=value</code> with no spaces around the equals sign."},
+{level:"Basic",topic:"Variables",type:"mcq",q:"Which syntax expands the value of a variable named <code>name</code>?",a:["$name","%name","@name","&name"],c:[0],h:"Bash parameter expansion commonly starts with a dollar sign.",e:"<code>$name</code> expands the value of the variable."},
+{level:"Basic",topic:"Variables",type:"mcq",q:"What does <code>export PATH</code> do?",a:["Exports PATH to child processes","Deletes PATH","Prints PATH only","Makes PATH read-only"],c:[0],h:"Think about variables inherited by programs launched from the shell.",e:"<code>export</code> marks a shell variable to be included in the environment of child processes."},
+{level:"Basic",topic:"Input",type:"mcq",q:"Which Bash builtin reads input from the user?",a:["read","scan","input","get"],c:[0],h:"The command name is very literal.",e:"<code>read</code> reads a line from standard input and can assign it to variables."},
+{level:"Basic",topic:"Standard Streams",type:"mcq",q:"Which standard stream normally carries ordinary command output?",a:["stdout","stdin","stderr","stdlog"],c:[0],h:"Standard input is for input; standard error is for diagnostics.",e:"stdout is file descriptor 1 and conventionally carries normal output."},
+{level:"Basic",topic:"Standard Streams",type:"mcq",q:"Which standard stream is intended for error and diagnostic messages?",a:["stderr","stdin","stdout","stdwarn"],c:[0],h:"It has a dedicated file descriptor.",e:"stderr is file descriptor 2 and is conventionally used for diagnostics."},
+{level:"Basic",topic:"Redirection",type:"mcq",q:"What does <code>&gt;</code> normally do?",a:["Redirects stdout and truncates an existing regular file","Appends stdout","Redirects stdin","Redirects stderr only"],c:[0],h:"Compare it with <code>&gt;&gt;</code>.",e:"<code>&gt;</code> redirects stdout to a file and normally truncates an existing file."},
+{level:"Basic",topic:"Redirection",type:"mcq",q:"What does <code>&gt;&gt;</code> normally do?",a:["Appends redirected output to a file","Truncates the file first","Reads from a file","Redirects stderr only"],c:[0],h:"It differs from <code>&gt;</code> in how an existing file is opened.",e:"<code>&gt;&gt;</code> opens the target for appending."},
+{level:"Basic",topic:"Redirection",type:"mcq",q:"What does <code>&lt; input.txt</code> do?",a:["Uses input.txt as standard input","Writes stdout to input.txt","Writes stderr to input.txt","Appends to input.txt"],c:[0],h:"The less-than operator is input redirection.",e:"<code>&lt;</code> connects the file to the command's standard input."},
+{level:"Basic",topic:"Directories",type:"mcq",q:"Which command prints the current working directory?",a:["pwd","cwd","where","dirpath"],c:[0],h:"Its name means “print working directory.”",e:"<code>pwd</code> prints the current working directory."},
+{level:"Basic",topic:"Directories",type:"mcq",q:"Which command changes the current working directory?",a:["cd","chdirx","move","goto"],c:[0],h:"It is one of the standard shell builtins.",e:"<code>cd</code> changes the shell's current working directory."},
+{level:"Basic",topic:"Files",type:"mcq",q:"Which command lists files and directories?",a:["ls","list","show","dirlist"],c:[0],h:"It is a two-letter Unix command.",e:"<code>ls</code> lists directory contents."},
+{level:"Basic",topic:"Directories",type:"mcq",q:"Which command creates a directory named <code>logs</code>?",a:["mkdir logs","makedir logs","newdir logs","create logs"],c:[0],h:"Its name means “make directory.”",e:"<code>mkdir logs</code> creates the directory."},
+{level:"Basic",topic:"Directories",type:"mcq",q:"Which command removes an empty directory?",a:["rmdir","rmfile","deldir","erase"],c:[0],h:"It means “remove directory.”",e:"<code>rmdir</code> removes empty directories."},
+{level:"Basic",topic:"Files",type:"mcq",q:"Which command creates an empty file if it does not exist?",a:["touch","makefile","newfile","createfile"],c:[0],h:"It can also update timestamps.",e:"<code>touch file</code> creates the file if absent or updates timestamps if it exists."},
+{level:"Basic",topic:"Files",type:"mcq",q:"Which command copies a file?",a:["cp","copyfile","dup","clone"],c:[0],h:"It is short for “copy.”",e:"<code>cp</code> copies files and, with appropriate options, directories."},
+{level:"Basic",topic:"Files",type:"mcq",q:"Which command can move or rename a file?",a:["mv","rn","movefile","shift"],c:[0],h:"One Unix command handles both operations.",e:"<code>mv</code> moves files/directories and can rename them."},
+{level:"Basic",topic:"Files",type:"mcq",q:"Which command removes a file?",a:["rm","del","erasefile","remove-file"],c:[0],h:"It is short for “remove.”",e:"<code>rm</code> removes directory entries/files when permissions allow."},
+{level:"Basic",topic:"File Viewing",type:"mcq",q:"Which command displays the beginning of a file?",a:["head","front","start","begin"],c:[0],h:"Its common counterpart is <code>tail</code>.",e:"<code>head</code> displays the beginning of a file or input."},
+{level:"Basic",topic:"File Viewing",type:"mcq",q:"Which command displays the end of a file?",a:["tail","end","last","bottom"],c:[0],h:"It is commonly used with log files.",e:"<code>tail</code> displays the end of a file."},
+{level:"Basic",topic:"Text Processing",type:"mcq",q:"Which command searches text for matching patterns?",a:["grep","seek","findtext","scan"],c:[0],h:"It is one of the core Unix text-processing commands.",e:"<code>grep</code> searches input for lines matching a pattern."},
+{level:"Basic",topic:"Pipelines",type:"mcq",q:"What does <code>|</code> do?",a:["Connects stdout of one command to stdin of the next","Runs commands as root","Redirects stderr to a file","Starts a background process"],c:[0],h:"Imagine one program producing data and another consuming it.",e:"A pipe connects the first command's stdout to the next command's stdin."},
+{level:"Basic",topic:"Command Chaining",type:"mcq",q:"What does <code>&amp;&amp;</code> mean between two commands?",a:["Run the second command if the first succeeds","Always run both","Run the second only if the first fails","Run both in parallel"],c:[0],h:"It is a success-dependent operator.",e:"<code>cmd1 &amp;&amp; cmd2</code> runs the second command only if the first returns success."},
+{level:"Basic",topic:"Background Jobs",type:"mcq",q:"What does a trailing <code>&amp;</code> normally do?",a:["Runs the command in the background","Redirects stdout","Escapes the next character","Repeats the command"],c:[0],h:"It allows the shell prompt to return while the job runs.",e:"A trailing <code>&amp;</code> starts an asynchronous/background job."},
+{level:"Basic",topic:"Loops",type:"mcq",q:"Which keyword begins the body of a Bash loop?",a:["do","body","start","loop"],c:[0],h:"It is paired with <code>done</code>.",e:"Bash loops commonly use <code>do ... done</code> around their body."},
+
+/* ===================== MEDIUM 31–60 ===================== */
+{level:"Medium",topic:"Special Parameters",type:"multi",q:"Which are Bash special parameters? Select all that apply.",a:["$#","$@","$$","$?"],c:[0,1,2,3],h:"Think argument count, arguments, shell PID, and exit status.",e:"All four are special parameters: <code>$#</code> is the argument count, <code>$@</code> represents positional arguments, <code>$$</code> is the shell PID, and <code>$?</code> is the previous status."},
+{level:"Medium",topic:"Positional Parameters",type:"mcq",q:"Inside a script, what does <code>$1</code> normally represent?",a:["The first positional argument","The script's exit code","The shell PID","The first environment variable"],c:[0],h:"Positional parameters start at 1.",e:"<code>$1</code> is the first positional argument supplied to the script or function."},
+{level:"Medium",topic:"File Descriptors",type:"mcq",q:"Which file descriptor is standard error?",a:["2","0","1","3"],c:[0],h:"stdin and stdout use the first two standard descriptors.",e:"stderr is file descriptor 2; stdin is 0 and stdout is 1."},
+{level:"Medium",topic:"Redirection",type:"mcq",q:"What does <code>2&gt;&amp;1</code> mean?",a:["Make stderr use the same destination currently used by stdout","Send stdout permanently to stderr","Read descriptor 2 from descriptor 1","Discard both streams"],c:[0],h:"The ampersand tells the shell that the target is a file descriptor.",e:"<code>2&gt;&amp;1</code> duplicates stdout's current destination onto stderr at that point in redirection processing."},
+{level:"Medium",topic:"Redirection",type:"mcq",q:"Why can <code>cmd &gt;out 2&gt;&amp;1</code> behave differently from <code>cmd 2&gt;&amp;1 &gt;out</code>?",a:["Redirections are processed left-to-right","The shell ignores the second form","stderr cannot be redirected","&gt; always has priority"],c:[0],h:"A descriptor duplication uses the destination that exists when it is processed.",e:"Bash processes redirections left-to-right, so the order affects where stderr ultimately goes."},
+{level:"Medium",topic:"Conditionals",type:"mcq",q:"Which is a traditional numeric equality test for <code>x</code> equal to 5?",a:["[ \"$x\" -eq 5 ]","[ \"$x\" = 5 ]","[ \"$x\" == 5 ] only","test \"$x\" == 5 only"],c:[0],h:"Classic numeric comparison uses <code>-eq</code>.",e:"<code>[ \"$x\" -eq 5 ]</code> tests integer equality. <code>=</code> traditionally performs string comparison."},
+{level:"Medium",topic:"Conditionals",type:"mcq",q:"Which syntax is Bash's extended conditional syntax?",a:["[[ ... ]]","(( ... )) only","{ ... }","&lt; ... &gt;"],c:[0],h:"Look for doubled square brackets.",e:"<code>[[ ... ]]</code> is Bash's extended conditional command and supports additional features."},
+{level:"Medium",topic:"File Tests",type:"multi",q:"Which are valid file tests commonly used with <code>[ ... ]</code>? Select all.",a:["-f","-d","-r","-x"],c:[0,1,2,3],h:"Think regular file, directory, readable, executable.",e:"<code>-f</code>, <code>-d</code>, <code>-r</code>, and <code>-x</code> test file type and access properties."},
+{level:"Medium",topic:"Conditionals",type:"mcq",q:"What keyword closes an <code>if</code> statement in Bash?",a:["fi","endif","done","end"],c:[0],h:"It is <code>if</code> written backwards.",e:"Bash closes an <code>if</code> statement with <code>fi</code>."},
+{level:"Medium",topic:"Case",type:"mcq",q:"Which keyword closes a Bash <code>case</code> statement?",a:["esac","endcase","fi","done"],c:[0],h:"It is the word <code>case</code> reversed.",e:"<code>esac</code> closes a Bash <code>case</code> statement."},
+{level:"Medium",topic:"Loops",type:"mcq",q:"What does <code>break</code> do inside a loop?",a:["Terminates the current loop","Skips the current iteration only","Restarts the loop","Always exits the shell"],c:[0],h:"Compare it with <code>continue</code>.",e:"<code>break</code> exits the current loop."},
+{level:"Medium",topic:"Loops",type:"mcq",q:"What does <code>continue</code> do inside a loop?",a:["Skips the remainder of the current iteration","Terminates the loop","Returns status 0","Starts a nested loop"],c:[0],h:"The loop continues, but this iteration does not finish normally.",e:"<code>continue</code> skips to the next iteration of the loop."},
+{level:"Medium",topic:"Functions",type:"mcq",q:"How does a Bash function normally return a status?",a:["With <code>return N</code>","With <code>yield N</code>","With <code>exit N</code> only","With <code>status N</code>"],c:[0],h:"Bash has a builtin specifically named <code>return</code>.",e:"<code>return N</code> sets a function's exit status. <code>exit</code> terminates the shell/script."},
+{level:"Medium",topic:"Functions",type:"mcq",q:"Inside a Bash function, what does <code>local x=5</code> do?",a:["Creates a function-local variable","Creates a system-wide variable","Exports x to child processes","Makes x constant"],c:[0],h:"The keyword controls variable scope.",e:"<code>local</code> makes the variable local to the function invocation."},
+{level:"Medium",topic:"Text Processing",type:"mcq",q:"Which command is particularly suited to column/field-oriented text processing?",a:["awk","touch","mkdir","sleep"],c:[0],h:"It commonly refers to fields using expressions such as <code>$1</code>.",e:"<code>awk</code> is designed for pattern scanning and structured text/field processing."},
+{level:"Medium",topic:"Text Processing",type:"mcq",q:"Which command is a stream editor often used for substitutions?",a:["sed","pwd","ps","jobs"],c:[0],h:"A classic example is <code>s/old/new/</code>.",e:"<code>sed</code> processes and transforms streams of text."},
+{level:"Medium",topic:"Text Processing",type:"mcq",q:"Which command extracts selected fields or character ranges from lines?",a:["cut","sort","uniq","tr"],c:[0],h:"The name suggests removing selected portions.",e:"<code>cut</code> extracts selected sections of each line."},
+{level:"Medium",topic:"Text Processing",type:"mcq",q:"Why is <code>sort</code> often used before <code>uniq</code> when removing duplicates?",a:["uniq normally compares adjacent lines, so sorting groups duplicates","uniq only accepts sorted files","sort enables regex in uniq","Bash requires this order"],c:[0],h:"Focus on the word “adjacent.”",e:"<code>uniq</code> normally collapses adjacent duplicate lines. Sorting first places identical lines together."},
+{level:"Medium",topic:"Text Processing",type:"mcq",q:"Which command counts lines, words and bytes/characters?",a:["wc","count","stat","measure"],c:[0],h:"Its name abbreviates “word count.”",e:"<code>wc</code> reports counts such as lines, words, bytes and, with options, characters."},
+{level:"Medium",topic:"File Search",type:"mcq",q:"Which command searches directory trees using tests such as <code>-name</code> and <code>-type</code>?",a:["find","grep","locateonly","search"],c:[0],h:"Unlike grep, it searches filesystem objects.",e:"<code>find</code> searches directory trees and can perform actions on matching objects."},
+{level:"Medium",topic:"Command Substitution",type:"mcq",q:"What does <code>$(date +%Y)</code> provide?",a:["The command's output for substitution","The date process PID","The command's exit status","A background process"],c:[0],h:"It is command-substitution syntax.",e:"<code>$(...)</code> runs the command and substitutes its standard output."},
+{level:"Medium",topic:"Regular Expressions",type:"mcq",q:"In a line-oriented regular expression, what does <code>^</code> normally anchor?",a:["The beginning of a line","The end of a line","A literal space","A digit"],c:[0],h:"Its common counterpart is <code>$</code>.",e:"<code>^</code> anchors a regex at the beginning of a line."},
+{level:"Medium",topic:"Regular Expressions",type:"mcq",q:"In a line-oriented regular expression, what does <code>$</code> normally anchor?",a:["The end of a line","The beginning of a line","A shell variable","A dollar amount"],c:[0],h:"Think of the line-ending counterpart to <code>^</code>.",e:"<code>$</code> anchors a regex at the end of a line."},
+{level:"Medium",topic:"Processes",type:"mcq",q:"Which command displays a snapshot of running processes?",a:["ps","procshow","jobsall","run"],c:[0],h:"It is a standard Unix process utility.",e:"<code>ps</code> displays process information."},
+{level:"Medium",topic:"Processes",type:"mcq",q:"Which command provides an interactive view of processes and resource usage?",a:["top","watchproc","ps -interactive","monitor"],c:[0],h:"It repeatedly updates its display.",e:"<code>top</code> provides an interactive, continuously updated process/resource view."},
+{level:"Medium",topic:"Signals",type:"mcq",q:"What does <code>kill PID</code> normally do?",a:["Sends a signal to the process","Deletes the executable","Kills the operating system","Removes the process from history"],c:[0],h:"Its underlying operation is signal delivery.",e:"<code>kill</code> sends a signal to a process. The default signal is normally SIGTERM."},
+{level:"Medium",topic:"Job Control",type:"mcq",q:"Which command lists jobs managed by the current interactive shell?",a:["jobs","psjobs","listjobs-system","bglist"],c:[0],h:"It reports shell job-control entries.",e:"<code>jobs</code> lists jobs known to the current shell."},
+{level:"Medium",topic:"Job Control",type:"mcq",q:"Which command brings a shell job to the foreground?",a:["fg","front","resume-fg","bring"],c:[0],h:"It is literally the foreground command.",e:"<code>fg</code> brings a background/stopped shell job to the foreground."},
+{level:"Medium",topic:"Job Control",type:"mcq",q:"Which command continues a stopped shell job in the background?",a:["bg","back","continue-bg","runbg"],c:[0],h:"It is the background counterpart to <code>fg</code>.",e:"<code>bg</code> resumes a stopped job in the background."},
+{level:"Medium",topic:"Command Chaining",type:"multi",q:"Which statements about <code>&amp;&amp;</code> and <code>||</code> are correct? Select all.",a:["<code>cmd1 &amp;&amp; cmd2</code> runs cmd2 when cmd1 succeeds","<code>cmd1 || cmd2</code> runs cmd2 when cmd1 fails","Both use command exit status for short-circuiting","Both always execute both commands"],c:[0,1,2],h:"Think in terms of zero and non-zero exit statuses.",e:"<code>&amp;&amp;</code> continues on success; <code>||</code> continues on failure; both short-circuit. They do not always execute both commands."},
+
+/* ===================== ADVANCED 61–90 ===================== */
+{level:"Advanced",topic:"Arrays",type:"mcq",q:"Which creates a Bash indexed array with two elements?",a:["arr=(one two)","arr=[one two]","array arr=(one,two)","arr={one two}"],c:[0],h:"Bash array assignment uses parentheses.",e:"<code>arr=(one two)</code> creates an indexed array with indexes 0 and 1."},
+{level:"Advanced",topic:"Arrays",type:"mcq",q:"Which expansion returns the number of elements in indexed array <code>arr</code>?",a:["${#arr[@]}","${arr#}","${count[arr]}","${@arr#}"],c:[0],h:"The length operator <code>#</code> combines with <code>@</code>.",e:"<code>${#arr[@]}</code> gives the number of elements in the array."},
+{level:"Advanced",topic:"Associative Arrays",type:"mcq",q:"Which command declares an associative Bash array?",a:["declare -A map","declare -K map","assoc map","array -dict map"],c:[0],h:"The Bash <code>declare</code> builtin has an option for associative arrays.",e:"<code>declare -A map</code> declares an associative array."},
+{level:"Advanced",topic:"getopts",type:"mcq",q:"What is <code>getopts</code> primarily used for?",a:["Parsing command-line options","Installing packages","Changing the shell prompt","Searching directories"],c:[0],h:"It helps scripts process options such as <code>-f file</code>.",e:"<code>getopts</code> is a Bash builtin for parsing command-line options."},
+{level:"Advanced",topic:"Positional Parameters",type:"mcq",q:"What does <code>shift</code> normally do?",a:["Renumbers positional parameters so old $2 becomes new $1","Moves terminal output","Changes the working directory","Moves files"],c:[0],h:"It changes the positional-parameter list.",e:"<code>shift</code> discards the first positional parameter by default and renumbers the remaining parameters."},
+{level:"Advanced",topic:"Here Documents",type:"mcq",q:"What is <code>&lt;&lt;EOF</code> mainly used for?",a:["Providing multiline input to a command","Starting a background process","Declaring an array","Redirecting stderr only"],c:[0],h:"Think of embedding a block of input directly in a script.",e:"A here document supplies multiline text as standard input to a command."},
+{level:"Advanced",topic:"Here Strings",type:"mcq",q:"What does <code>command &lt;&lt;&lt; \"$text\"</code> normally do?",a:["Feeds the string to standard input","Treats the string as a command name","Returns a file descriptor number","Starts a background job"],c:[0],h:"Compare <code>&lt;&lt;&lt;</code> with a multiline <code>&lt;&lt;EOF</code> block.",e:"A here string feeds a string to a command's standard input, normally with a newline appended."},
+{level:"Advanced",topic:"Subshells",type:"mcq",q:"What is a common property of <code>( commands )</code> in Bash?",a:["The commands run in a subshell environment","They always run as root","They become a function","They are compiled first"],c:[0],h:"Parentheses can create a separate shell execution environment.",e:"A parenthesized command list runs in a subshell. Variable changes there generally do not modify the parent shell."},
+{level:"Advanced",topic:"Command Substitution",type:"mcq",q:"Which is the preferred modern Bash command-substitution form?",a:["$(command)","`command`","${command}","(command)"],c:[0],h:"One form nests more cleanly than the older syntax.",e:"<code>$(command)</code> is preferred over legacy backtick substitution because it is easier to read and nest."},
+{level:"Advanced",topic:"trap",type:"mcq",q:"What is <code>trap</code> commonly used for?",a:["Running shell code when signals/events occur","Creating network sockets","Changing file permissions","Sorting arrays"],c:[0],h:"Cleanup on script exit is a common example.",e:"<code>trap</code> lets a script specify actions for signals and shell events such as EXIT."},
+{level:"Advanced",topic:"Signals",type:"multi",q:"Which are valid Unix signals commonly used with shell process control? Select all.",a:["SIGTERM","SIGKILL","SIGINT","SIGSTOP"],c:[0,1,2,3],h:"Think termination, forceful termination, interrupt, and stop.",e:"All four are standard signals. SIGKILL and SIGSTOP cannot be caught or ignored by the target process."},
+{level:"Advanced",topic:"Debugging",type:"mcq",q:"What does <code>set -x</code> do?",a:["Enables command execution tracing","Exits on every error","Treats unset variables as errors","Enables pipefail"],c:[0],h:"It is commonly called xtrace.",e:"<code>set -x</code> prints commands, after expansion, as Bash executes them."},
+{level:"Advanced",topic:"Debugging",type:"mcq",q:"What is the main effect of <code>set -e</code>?",a:["Enables errexit behavior, with Bash-specific exceptions","Makes all commands verbose","Treats every unset variable as an error","Makes every pipeline fail"],c:[0],h:"It is often described as “exit on error,” but it has exceptions.",e:"<code>set -e</code> enables errexit behavior. Bash has important exceptions in conditionals, lists, pipelines and other contexts."},
+{level:"Advanced",topic:"Debugging",type:"mcq",q:"What does <code>set -u</code> generally do?",a:["Treats expansion of unset variables as an error","Enables command tracing","Exports all variables","Disables functions"],c:[0],h:"Think “nounset.”",e:"<code>set -u</code> enables nounset behavior: references to unset variables generally produce an error, subject to documented exceptions."},
+{level:"Advanced",topic:"Pipelines",type:"mcq",q:"What does <code>set -o pipefail</code> change?",a:["A pipeline can fail when a non-final command fails","All pipeline commands run sequentially","Pipes are disabled","stderr is redirected"],c:[0],h:"Without pipefail, the last command normally determines pipeline status.",e:"With <code>pipefail</code>, a pipeline returns non-zero if any command fails, using the rightmost failing command's status."},
+{level:"Advanced",topic:"Strictness",type:"multi",q:"Which are commonly used for stricter Bash error behavior? Select all.",a:["set -e","set -u","set -o pipefail","set -x"],c:[0,1,2],h:"Think errexit, nounset and pipeline failure. One option is mainly tracing.",e:"<code>-e</code>, <code>-u</code> and <code>pipefail</code> are commonly combined for stricter behavior. <code>-x</code> is primarily execution tracing."},
+{level:"Advanced",topic:"Process IDs",type:"mcq",q:"What does <code>$$</code> normally expand to in Bash?",a:["The PID of the current shell","The PID of the latest background process","The last exit status","The argument count"],c:[0],h:"Compare it with <code>$!</code> and <code>$?</code>.",e:"<code>$$</code> expands to the process ID of the current shell context."},
+{level:"Advanced",topic:"Process IDs",type:"mcq",q:"What does <code>$!</code> normally contain?",a:["The PID of the most recent background pipeline/process","The current shell PID","The last exit status","The number of shell jobs"],c:[0],h:"It is useful immediately after <code>command &amp;</code>.",e:"<code>$!</code> contains the process ID of the most recent asynchronous pipeline started by the shell."},
+{level:"Advanced",topic:"nohup",type:"mcq",q:"What is <code>nohup</code> designed to help with?",a:["Keeping a command running despite a hangup signal","Running every command as root","Encrypting output","Changing CPU priority"],c:[0],h:"Its name means “no hangup.”",e:"<code>nohup</code> runs a command while arranging for it to ignore SIGHUP, commonly helping it survive logout."},
+{level:"Advanced",topic:"Cron",type:"mcq",q:"What is a cron job?",a:["A command or script scheduled by a cron service","A process that must stay in the foreground","A Bash function","A filesystem watcher"],c:[0],h:"Think recurring time-based automation.",e:"Cron provides time-based scheduling for commands and scripts."},
+{level:"Advanced",topic:"Shell Startup",type:"mcq",q:"What is <code>.bashrc</code> primarily associated with?",a:["Interactive non-login Bash shell configuration","Kernel boot configuration","Cron's database","Filesystem permissions"],c:[0],h:"It commonly contains aliases, functions and interactive settings.",e:"<code>.bashrc</code> is commonly used for interactive non-login Bash configuration, depending on how Bash is started."},
+{level:"Advanced",topic:"Shell Startup",type:"mcq",q:"What is <code>.bash_profile</code> primarily associated with?",a:["Login-shell initialization","Bash history storage","Filesystem mounting","Process scheduling"],c:[0],h:"The filename contains a clue.",e:"<code>.bash_profile</code> is a login-shell startup file. On many systems it sources <code>.bashrc</code>."},
+{level:"Advanced",topic:"Functions",type:"multi",q:"Which statements about Bash functions are correct? Select all.",a:["They can accept positional parameters","return can set a function's status","local can create function-local variables","A function can be called by its name"],c:[0,1,2,3],h:"Functions provide reusable shell code, parameters and a status.",e:"All four statements are correct."},
+{level:"Advanced",topic:"Security",type:"mcq",q:"Why can <code>eval \"$user_input\"</code> be dangerous?",a:["It can cause user-controlled text to be parsed and executed as shell syntax","It always causes a syntax error","It only prints the input","It automatically escapes metacharacters"],c:[0],h:"Ask what happens when text is parsed as shell code a second time.",e:"<code>eval</code> causes its arguments to be parsed again as shell syntax. Untrusted input can therefore enable command injection."},
+{level:"Advanced",topic:"Quoting",type:"multi",q:"Which practices generally help preserve argument boundaries? Select all.",a:["Quote an expansion such as \"$file\" when one argument is intended","Use arrays for lists of arguments","Use \"$@\" when forwarding positional arguments individually","Rely on unquoted $file for arbitrary filenames"],c:[0,1,2],h:"The key idea is avoiding accidental word splitting and pathname expansion.",e:"Quoting and arrays preserve argument boundaries. Unquoted expansions can undergo word splitting and pathname expansion."},
+{level:"Advanced",topic:"Command Chaining",type:"mcq",q:"In <code>grep pattern file &amp;&amp; echo OK || echo FAIL</code>, what is a subtle point?",a:["FAIL can also run if echo OK itself fails","Only one echo can ever run","The || is ignored after &&","grep is executed twice"],c:[0],h:"Both operators use the status of the command immediately before them.",e:"If grep succeeds, echo OK runs. If echo OK then fails, the following <code>||</code> can run echo FAIL too."},
+{level:"Advanced",topic:"Exit Codes",type:"mcq",q:"By Unix shell convention, what does exit status 0 normally indicate?",a:["Success","Failure","Signal termination only","Unset variable"],c:[0],h:"Shell conditionals treat zero as successful.",e:"Exit status 0 conventionally means success; non-zero values indicate failure or another condition."},
+{level:"Advanced",topic:"Signals",type:"mcq",q:"Which signal generally cannot be caught, blocked or ignored by the target process?",a:["SIGKILL","SIGTERM","SIGINT","SIGHUP"],c:[0],h:"It is the forceful termination signal.",e:"SIGKILL cannot be caught, blocked or ignored. SIGSTOP is also uncatchable/unignorable."},
+{level:"Advanced",topic:"Scripting Practice",type:"multi",q:"Which are generally good practices for maintainable Bash scripts? Select all.",a:["Use meaningful names and reusable functions","Validate inputs and handle failures","Quote expansions where appropriate","Keep set -x permanently enabled in production because it is always safest"],c:[0,1,2],h:"Think readability, validation, safe expansion and controlled diagnostics.",e:"Meaningful structure, validation/error handling and appropriate quoting improve scripts. Permanent xtrace can expose secrets, so use it deliberately."},
+{level:"Advanced",topic:"Advanced Bash",type:"mcq",q:"What does <code>return 7</code> do when executed inside a Bash function?",a:["Ends the current function with status 7","Terminates the entire shell immediately","Returns the string 7 as standard output","Changes the exit status of the parent terminal"],c:[0],h:"Compare <code>return</code> with <code>exit</code>.",e:"Inside a function, <code>return 7</code> ends that function invocation and sets its return status to 7. It does not by itself terminate the entire shell."}
+];
+
+if (QUESTIONS.length !== 90) {
+  throw new Error("Quiz data error: expected exactly 90 questions, found " + QUESTIONS.length);
+}
+if (QUESTIONS.slice(0,30).some(q=>q.level!=="Basic") ||
+    QUESTIONS.slice(30,60).some(q=>q.level!=="Medium") ||
+    QUESTIONS.slice(60,90).some(q=>q.level!=="Advanced")) {
+  throw new Error("Quiz level ordering error.");
+}
+
+const STORAGE_KEY = "linux-shell-scripting-90-quiz-v2";
+const quizPanel = document.getElementById("quizPanel");
+const resultsPanel = document.getElementById("results");
+const progressBar = document.getElementById("progressBar");
+const progressLabel = document.getElementById("progressLabel");
+const attemptLabel = document.getElementById("attemptLabel");
+
+let attempts = loadAttempts();
+let state = {
+  index:0,
+  answers:Array(QUESTIONS.length).fill(null),
+  checked:Array(QUESTIONS.length).fill(false),
+  startedAt:Date.now()
+};
+
+function loadAttempts(){
+  try{
+    const data=JSON.parse(localStorage.getItem(STORAGE_KEY)||"[]");
+    return Array.isArray(data)?data:[];
+  }catch(e){return [];}
+}
+function saveAttempts(){
+  try{localStorage.setItem(STORAGE_KEY,JSON.stringify(attempts.slice(-20)));}catch(e){}
+}
+function escapeHTML(value){
+  return String(value).replace(/[&<>"']/g, ch => ({
+    "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"
+  }[ch]));
+}
+function selectedAnswers(){
+  return Array.from(document.querySelectorAll('input[name="answer"]:checked'))
+    .map(el=>Number(el.value)).sort((a,b)=>a-b);
+}
+function equalArrays(a,b){
+  return a.length===b.length && a.every((v,i)=>v===b[i]);
+}
+function letter(i){return String.fromCharCode(65+i);}
+function formatChoices(q,indices){
+  return indices.map(i=>letter(i)+". "+q.a[i]).join(" • ");
+}
+
+function renderQuestion(){
+  const q=QUESTIONS[state.index];
+  const saved=state.answers[state.index] || [];
+  const inputType=q.type==="multi" ? "checkbox" : "radio";
+  const typeName=q.type==="multi" ? "Multi-select" : q.type==="tf" ? "True / False" : "Multiple Choice";
+
+  progressLabel.textContent=`Question ${state.index+1} of ${QUESTIONS.length}`;
+  attemptLabel.textContent=`Attempt ${attempts.length+1}`;
+  progressBar.style.width=((state.index)/QUESTIONS.length*100)+"%";
+  progressBar.parentElement.setAttribute("aria-valuenow",String(state.index));
+
+  const options=q.a.map((answer,i)=>`
+    <label class="option">
+      <input type="${inputType}" name="answer" value="${i}" ${saved.includes(i)?"checked":""}
+             aria-label="Option ${letter(i)}">
+      <span><strong>${letter(i)}.</strong> ${escapeHTML(answer)}</span>
+    </label>
+  `).join("");
+
+  quizPanel.innerHTML=`
+    <div class="question-level">${q.level} • ${typeName} • ${escapeHTML(q.topic)}</div>
+    <div class="question" id="questionText">${q.q}</div>
+    <div class="options" role="group" aria-labelledby="questionText">${options}</div>
+    <div class="actions">
+      <button class="secondary" id="hintButton" type="button">💡 Hint</button>
+      <button class="secondary" id="clearButton" type="button">Clear</button>
+      ${state.index>0?'<button class="secondary" id="prevButton" type="button">← Previous</button>':""}
+      <button id="checkButton" type="button">${state.index===89?"Finish Quiz":"Check Answer"}</button>
+    </div>
+    <div id="hintBox" class="feedback hint hidden" role="note">
+      <strong>Hint:</strong> ${escapeHTML(q.h)}
+    </div>
+    <div id="feedbackBox" class="feedback hidden" aria-live="assertive"></div>
+  `;
+
+  document.getElementById("hintButton").addEventListener("click",()=>{
+    document.getElementById("hintBox").classList.toggle("hidden");
+  });
+  document.getElementById("clearButton").addEventListener("click",()=>{
+    document.querySelectorAll('input[name="answer"]').forEach(x=>x.checked=false);
+    state.answers[state.index]=null;
+  });
+  if(state.index>0) document.getElementById("prevButton").addEventListener("click",()=>goTo(state.index-1));
+  document.getElementById("checkButton").addEventListener("click",checkAnswer);
+}
+
+function checkAnswer(){
+  const selected=selectedAnswers();
+  if(selected.length===0){
+    document.getElementById("feedbackBox").className="feedback bad";
+    document.getElementById("feedbackBox").innerHTML="<strong>Please select an answer.</strong> Choose at least one option before checking.";
+    return;
+  }
+
+  const q=QUESTIONS[state.index];
+  const correct=equalArrays(selected,q.c);
+  state.answers[state.index]=selected;
+  state.checked[state.index]=true;
+
+  const feedback=document.getElementById("feedbackBox");
+  feedback.className="feedback "+(correct?"good":"bad");
+  feedback.innerHTML=`
+    <strong>${correct?"✓ Correct":"✗ Not correct"}</strong><br>
+    ${q.e}<br>
+    <span class="small muted"><strong>Correct answer:</strong> ${escapeHTML(formatChoices(q,q.c))}</span>
+  `;
+
+  document.querySelectorAll('input[name="answer"]').forEach(x=>x.disabled=true);
+
+  const button=document.getElementById("checkButton");
+  if(state.index<QUESTIONS.length-1){
+    button.textContent="Next Question →";
+    button.onclick=()=>goTo(state.index+1);
+  }else{
+    button.textContent="View Final Results";
+    button.onclick=finishQuiz;
+  }
+  feedback.scrollIntoView({behavior:"smooth",block:"nearest"});
+}
+
+function goTo(index){
+  if(index<0 || index>=QUESTIONS.length) return;
+  state.index=index;
+  renderQuestion();
+  window.scrollTo({top:0,behavior:"smooth"});
+}
+
+function grade(percent){
+  if(percent>=90) return "A+ — Excellent";
+  if(percent>=80) return "A — Very Good";
+  if(percent>=70) return "B — Good";
+  if(percent>=60) return "C — Satisfactory";
+  if(percent>=50) return "D — Needs Improvement";
+  return "Needs Practice";
+}
+
+function finishQuiz(){
+  const topicMap={};
+  let score=0;
+
+  QUESTIONS.forEach((q,i)=>{
+    const selected=state.answers[i]||[];
+    const correct=equalArrays(selected,q.c);
+    if(correct) score++;
+    if(!topicMap[q.topic]) topicMap[q.topic]={correct:0,total:0};
+    topicMap[q.topic].total++;
+    if(correct) topicMap[q.topic].correct++;
+  });
+
+  const percent=Math.round(score/QUESTIONS.length*100);
+  const result={
+    date:new Date().toLocaleString(),
+    score,
+    total:QUESTIONS.length,
+    percent
+  };
+  attempts.push(result);
+  saveAttempts();
+
+  progressBar.style.width="100%";
+  progressBar.parentElement.setAttribute("aria-valuenow","90");
+  renderResults(topicMap,result);
+}
+
+function renderResults(topicMap,result){
+  quizPanel.classList.add("hidden");
+  resultsPanel.classList.remove("hidden");
+
+  const topicRows=Object.entries(topicMap).map(([topic,v])=>`
+    <tr>
+      <td>${escapeHTML(topic)}</td>
+      <td>${v.correct}/${v.total}</td>
+      <td>${Math.round(v.correct/v.total*100)}%</td>
+    </tr>
+  `).join("");
+
+  const review=QUESTIONS.map((q,i)=>{
+    const selected=state.answers[i]||[];
+    const correct=equalArrays(selected,q.c);
+    return `
+      <div class="review-item">
+        <div><strong>${i+1}. ${q.q}</strong></div>
+        <div class="small ${correct?"good-text":"bad-text"}">${correct?"✓ Correct":"✗ Wrong"}</div>
+        <div class="small muted"><strong>Your answer:</strong> ${selected.length?escapeHTML(formatChoices(q,selected)):"No answer"}</div>
+        <div class="small"><strong>Correct:</strong> ${escapeHTML(formatChoices(q,q.c))}</div>
+        <div class="small muted">${q.e}</div>
+      </div>
+    `;
+  }).join("");
+
+  const history=attempts.slice().reverse().slice(0,10).map(a=>`
+    <tr><td>${escapeHTML(a.date)}</td><td>${a.score}/${a.total}</td><td>${a.percent}%</td><td>${grade(a.percent)}</td></tr>
+  `).join("");
+
+  let trend="";
+  if(attempts.length>=2){
+    const previous=attempts[attempts.length-2];
+    const delta=result.percent-previous.percent;
+    trend=delta>0
+      ? `<p class="good-text"><strong>Improvement:</strong> +${delta} percentage points from the previous completed attempt.</p>`
+      : delta<0
+        ? `<p class="bad-text"><strong>Change:</strong> ${delta} percentage points from the previous completed attempt.</p>`
+        : `<p class="muted"><strong>Change:</strong> Same percentage as the previous completed attempt.</p>`;
+  }
+
+  resultsPanel.innerHTML=`
+    <section class="panel result">
+      <h2>Quiz Complete</h2>
+      <div class="big-score">${result.score} / ${result.total}</div>
+      <div class="grade">${result.percent}% — ${grade(result.percent)}</div>
+      <p class="muted">Multi-select questions earn the point only when all correct choices and no incorrect choices are selected.</p>
+      ${trend}
+      <div class="actions">
+        <button id="retakeButton" type="button">Retake Quiz</button>
+        <button class="secondary" id="printButton" type="button">Print Results</button>
+      </div>
+    </section>
+
+    <section class="panel result">
+      <h2>Topic / Skill Breakdown</h2>
+      <table>
+        <thead><tr><th>Topic</th><th>Score</th><th>Accuracy</th></tr></thead>
+        <tbody>${topicRows}</tbody>
+      </table>
+    </section>
+
+    <section class="panel result">
+      <h2>Answer Review</h2>
+      ${review}
+    </section>
+
+    <section class="panel result">
+      <h2>Progress Tracking</h2>
+      <p class="muted">Completed attempts are stored locally in this browser. No account or server is required.</p>
+      <table>
+        <thead><tr><th>Date</th><th>Score</th><th>Percentage</th><th>Grade</th></tr></thead>
+        <tbody>${history}</tbody>
+      </table>
+      <div class="actions">
+        <button class="danger" id="clearHistoryButton" type="button">Clear Local History</button>
+      </div>
+    </section>
+  `;
+
+  document.getElementById("retakeButton").addEventListener("click",restart);
+  document.getElementById("printButton").addEventListener("click",()=>window.print());
+  document.getElementById("clearHistoryButton").addEventListener("click",()=>{
+    if(window.confirm("Clear all saved quiz attempts from this browser?")){
+      attempts=[];
+      saveAttempts();
+      alert("Quiz history cleared.");
+      renderResults(topicMap,result);
+    }
+  });
+}
+
+function restart(){
+  state={
+    index:0,
+    answers:Array(QUESTIONS.length).fill(null),
+    checked:Array(QUESTIONS.length).fill(false),
+    startedAt:Date.now()
+  };
+  resultsPanel.classList.add("hidden");
+  quizPanel.classList.remove("hidden");
+  renderQuestion();
+  window.scrollTo({top:0,behavior:"smooth"});
+}
+
+renderQuestion();
+</script>
+</body>
+</html>
